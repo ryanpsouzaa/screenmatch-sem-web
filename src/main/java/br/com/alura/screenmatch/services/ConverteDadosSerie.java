@@ -21,4 +21,18 @@ public class ConverteDadosSerie implements InterfaceConverteDados{
             throw new RuntimeException(e);
         }
     }
+
+    /* Realizando para Gson:
+
+    Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+
+
+    public <T> T converteDados(String json, Class<T> classe){
+
+        return gson.fromJson(json, classe);
+        }
+
+
+
+     */
 }
