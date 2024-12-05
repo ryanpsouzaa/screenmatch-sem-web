@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ConverteDadosSerie implements InterfaceConverteDados{
+public class Conversor implements InterfaceConverteDados{
 
     ObjectMapper mapper = new ObjectMapper();
 
