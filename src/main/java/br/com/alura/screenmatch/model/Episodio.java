@@ -18,7 +18,7 @@ public class Episodio {
     public Episodio(Integer temporada, DadosEpisodio dadosEpisodio){
         this.temporada = temporada;
         this.titulo = dadosEpisodio.titulo();
-        this.episodioNumero = dadosEpisodio.numero();
+        this.episodioNumero = dadosEpisodio.numeroEpisodio();
         try{
             this.avaliacao = Double.parseDouble(dadosEpisodio.avaliacao());
 
@@ -71,5 +71,13 @@ public class Episodio {
 
     public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
+    }
+
+    @Override
+    public String toString(){
+        return getTitulo() + ", Temporada: " + getTemporada() +
+                ", Episódio: " + getEpisodioNumero() +
+                ", Avaliação: " + getAvaliacao() +
+                ", Lançamento: " + getDataLancamento();
     }
 }

@@ -62,11 +62,23 @@ public class Principal {
 
         System.out.println("//////////////////");
         System.out.println("Top 5 episódios:");
-        todosEpisodios.stream()
-                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
-                .sorted(Comparator.comparing(DadosEpisodio :: avaliacao).reversed())
+//        todosEpisodios.stream()
+//                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+//                .sorted(Comparator.comparing(DadosEpisodio :: avaliacao).reversed())
+//                .limit(5)
+//                .forEach(System.out::println);
+
+        List<Episodio> top5Episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                        .sorted(Comparator.comparing(DadosEpisodio :: avaliacao).reversed())
+                        .map(e -> new Episodio(t.numeroTemporada(), e)))
+                .sorted(Comparator.comparing(Episodio :: getAvaliacao).reversed())
                 .limit(5)
-                .forEach(System.out::println);
+                .collect(Collectors.toList());
+
+        top5Episodios.forEach(System.out::println);
+        System.out.println("////////////////////////////////");
 
 
         List<Episodio> episodios = temporadas.stream()
@@ -74,7 +86,6 @@ public class Principal {
                                 .map(d -> new Episodio(t.numeroTemporada(), d))
                 ).collect(Collectors.toList());
 
-        episodios.forEach(System.out::println);
 
         System.out.println("Digite a partir de qual data que deseja filtrar os episódios:");
         var ano = Integer.parseInt(leitura.nextLine());
@@ -87,9 +98,16 @@ public class Principal {
                 .forEach(e -> System.out.println(
                         "Temporada: " + e.getTemporada() +
                                 ", Episódio: " + e.getEpisodioNumero() +
-                                " " + e.getTitulo() +
+                                ", " + e.getTitulo() +
                                 ", Lançamento: " + e.getDataLancamento().format(fmt1)
                 ));
+
+        System.out.println("//////////////////////////////////////////");
+        List<DadosEpisodio> todosEpisodiosTeste = temporadas.stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toList());
+
+        todosEpisodiosTeste.forEach(System.out::println);
 
 
     }
