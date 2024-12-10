@@ -1,8 +1,6 @@
 package br.com.alura.screenmatch.model;
 
-import br.com.alura.screenmatch.services.ConsultaChatGPT;
 import br.com.alura.screenmatch.services.traducao.ConsultaMyMemory;
-import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.OptionalDouble;
 
