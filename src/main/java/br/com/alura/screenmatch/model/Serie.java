@@ -18,7 +18,7 @@ public class Serie {
         this.totalTemporadas = dadosSerie.totalTemporadas();
         this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
         this.atores = dadosSerie.atores();
-        this.sinopse = ConsultaMyMemory.obterTraducao(dadosSerie.sinopse()).trim();git 
+        this.sinopse = ConsultaMyMemory.obterTraducao(dadosSerie.sinopse()).trim();
         this.poster = dadosSerie.poster();
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
 
