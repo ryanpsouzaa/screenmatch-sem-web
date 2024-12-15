@@ -123,7 +123,8 @@ public class Episodio {
 
     @Override
     public String toString(){
-        return serie.getTitulo() + " - Temporada: " + getTemporada() + " - Episódio: " + getEpisodioNumero() + " - " + getTitulo() +
-                " - Avaliação: " + getAvaliacao() + " - Data: " + getDataLancamento();
+        return
+                getDataLancamento() + " - " + serie.getTitulo() + " - Temporada: " + getTemporada() + " - Episódio: " + getEpisodioNumero() + " - " + getTitulo() +
+                " - Avaliação: " + getAvaliacao();
     }
 }

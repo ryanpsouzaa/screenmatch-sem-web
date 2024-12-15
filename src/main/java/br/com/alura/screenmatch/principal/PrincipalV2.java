@@ -264,6 +264,16 @@ public class PrincipalV2 {
             }
         }
 
+    public void salvarEpisodios(Serie serie){
+        try {
+            List<Episodio> episodiosSerie = buscarEpisodios(serie.getTitulo());
+
+        } catch (SerieNaoEncontrada e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public Serie buscarSerie(String tituloSerie){
         String json = ENDERECO + tituloSerie.replace(" ", "+") + API_KEY;
         json = consumo.obterDados(json);
@@ -271,6 +281,8 @@ public class PrincipalV2 {
         Serie serie = new Serie(conversor.converteDados(json, DadosSerie.class));
 
         repositorio.save(serie);
+
+        salvarEpisodios(serie);
 
         return serie;
     }
