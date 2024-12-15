@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ManyToAny;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 
 @Entity
@@ -18,6 +20,7 @@ public class Episodio {
     @ManyToOne
     private Serie serie;
 
+    @Column (unique = true)
     private String titulo;
 
     private Integer temporada;
@@ -98,11 +101,29 @@ public class Episodio {
         this.serie = serie;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Episodio episodio = (Episodio) o;
+        return Objects.equals(id, episodio.id) && Objects.equals(serie, episodio.serie) && Objects.equals(titulo, episodio.titulo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, serie, titulo);
+    }
+
     @Override
     public String toString(){
-        return getTitulo() + ", Temporada: " + getTemporada() +
-                ", Episódio: " + getEpisodioNumero() +
-                ", Avaliação: " + getAvaliacao() +
-                ", Lançamento: " + getDataLancamento();
+        return serie.getTitulo() + " - Temporada: " + getTemporada() + " - Episódio: " + getEpisodioNumero() + " - " + getTitulo() +
+                " - Avaliação: " + getAvaliacao() + " - Data: " + getDataLancamento();
     }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.OptionalDouble;
 
 @Entity
@@ -115,13 +116,29 @@ public class Serie {
         this.episodios = episodios;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Serie serie = (Serie) o;
+        return Objects.equals(id, serie.id) && Objects.equals(titulo, serie.titulo) && Objects.equals(sinopse, serie.sinopse) && Objects.equals(poster, serie.poster) && Objects.equals(episodios, serie.episodios);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, titulo, sinopse, poster, episodios);
+    }
+
     @Override
     public String toString(){
-        return "Gênero: " + getGenero() +
-                ", Título: " + getTitulo() +
-                ", Temporadas: " + getTotalTemporadas() +
-                ", Avaliação: " + getAvaliacao() +
-                ", Sinopse: " + getSinopse() +
-                ", Episódios: " + getEpisodios();
+        return "Gênero: " + getGenero() + " - Título: " + getTitulo() + " - Temporadas: " + getTotalTemporadas() +
+                " - Nota: " + getAvaliacao() + " - Sinopse: " + getSinopse();
     }
 }
