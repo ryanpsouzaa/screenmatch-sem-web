@@ -6,6 +6,7 @@ import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.services.ConsumoApi;
 import br.com.alura.screenmatch.services.Conversor;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,10 +52,11 @@ public class PrincipalV2 {
                      (6) Buscar séries por Gênero
                      (7) Buscar séries por número de temporadas + avaliação
                      (8) Buscar Episódio(s) por trecho do título
+                     (9) Pesquisar episódios a partir de um ano
                    
                               TOP 5
-                     (9) Listar TOP 5 das séries pesquisadas
-                     (10) Pesquisar TOP 5 episódios de uma série
+                     (10) Listar TOP 5 das séries pesquisadas
+                     (11) Pesquisar TOP 5 episódios de uma série
                      
                      (0) Sair
                     """);
@@ -224,6 +226,28 @@ public class PrincipalV2 {
 
                 case 9:
 
+                    System.out.println("Séries pesquisadas: ");
+                    buscarSeriesPesquisadas().stream()
+                                    .forEach(e -> System.out.println(e.getTitulo()));
+                    System.out.println("Digite o nome da série que deseja pesquisar: ");
+                    nomeSerie = leitura.nextLine();
+
+                    System.out.println("A partir de qual ano deseja filtrar os episódios?");
+                    int ano = Integer.parseInt(leitura.nextLine());
+
+                    try{
+                        List<Episodio> episodiosFiltrados = buscarEpisodiosAPartirDoAno(nomeSerie, ano);
+
+                        episodiosFiltrados.forEach(System.out::println);
+
+                    } catch(NullPointerException e){
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+
+                case 10:
+
                     try{
                         List<Serie> listaTop5 = buscarTop5();
                         System.out.println("TOP séries por avaliação:");
@@ -238,7 +262,7 @@ public class PrincipalV2 {
 
                     break;
 
-                case 10:
+                case 11:
 
                     seriesPesquisadas = buscarSeriesPesquisadas();
                     System.out.println("Títulos já pesquisados: ");
@@ -426,6 +450,23 @@ public class PrincipalV2 {
             } else{
                 return top5;
             }
+        } catch (SerieNaoEncontrada e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public List<Episodio> buscarEpisodiosAPartirDoAno(String nomeSerie, int anoSerie){
+        try{
+            Serie serieBuscada = buscarSeriePorTitulo(nomeSerie);
+            List<Episodio> episodiosPesquisados = repositorio.buscarEpisodiosPartirData(serieBuscada, anoSerie);
+            if(episodiosPesquisados.isEmpty()){
+                throw new NullPointerException("Não foram encontrados episódios a partir de " + anoSerie);
+
+            }else{
+                return episodiosPesquisados;
+            }
+
         } catch (SerieNaoEncontrada e) {
             throw new RuntimeException(e);
         }

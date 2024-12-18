@@ -39,6 +39,9 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC LIMIT 5")
     List<Episodio> buscarTop5Episodios(Serie serie);
 
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie AND YEAR(e.dataLancamento) >= :ano")
+    List<Episodio> buscarEpisodiosPartirData(Serie serie, int ano);
+
     @Query("SELECT COUNT(e) > 0 FROM Episodio e WHERE e.serie = :serie AND e.temporada = :temporada AND e.titulo = :titulo")
     boolean existeSerieComTemporadaETitulo(@Param("serie") Serie serie,
                                            @Param("temporada") int temporada,
