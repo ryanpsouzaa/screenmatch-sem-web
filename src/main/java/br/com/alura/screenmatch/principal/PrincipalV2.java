@@ -319,6 +319,7 @@ public class PrincipalV2 {
             String json = consumo.obterDados(endereco);
             DadosTemporada temporada = conversor.converteDados(json, DadosTemporada.class);
             temporadas.add(temporada);
+
         }
         if(temporadas.isEmpty()){
             throw new NullPointerException("Não foram encontradas temporadas");
